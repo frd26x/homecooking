@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt")
 const bcryptSalt = 10
 
 router.post("/signup", (req, res, next) => {
-  const { username, password, name } = req.body
+  const { username, password, isCook } = req.body
   if (!username || !password) {
     res.status(400).json({ message: "Indicate username and password" })
     return
@@ -21,7 +21,7 @@ router.post("/signup", (req, res, next) => {
       }
       const salt = bcrypt.genSaltSync(bcryptSalt)
       const hashPass = bcrypt.hashSync(password, salt)
-      const newUser = new User({ username, password: hashPass, name })
+      const newUser = new User({ username, password: hashPass, isCook })
       return newUser.save()
     })
     .then(userSaved => {
@@ -37,40 +37,8 @@ router.post("/signup", (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post("/login", (req, res, next) => {
-  const { username, password } = req.body
-
-  // first check to see if there's a document with that username
-  User.findOne({ username })
-    .then(userDoc => {
-      // "userDoc" will be empty if the username is wrong (no document in database)
-      if (!userDoc) {
-        // create an error object to send to our error handler with "next()"
-        next(new Error("Incorrect username "))
-        return
-      }
-
-      // second check the password
-      // "compareSync()" will return false if the "password" is wrong
-      if (!bcrypt.compareSync(password, userDoc.password)) {
-        // create an error object to send to our error handler with "next()"
-        next(new Error("Password is wrong"))
-        return
-      }
-
-      // LOG IN THIS USER
-      // "req.logIn()" is a Passport method that calls "serializeUser()"
-      // (that saves the USER ID in the session)
-      req.logIn(userDoc, () => {
-        // hide "encryptedPassword" before sending the JSON (it's a security risk)
-        userDoc.password = undefined
-        res.json(userDoc)
-      })
-    })
-    .catch(err => next(err))
-})
-
-router.post('/login-with-passport-local-strategy', (req, res, next) => {
+//login with passport
+router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, theUser, failureDetails) => {
     if (err) {
       res.status(500).json({ message: 'Something went wrong' })

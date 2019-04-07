@@ -1,53 +1,61 @@
-import React, { Component } from 'react';
-import api from '../../api';
+import React, { useState } from "react";
 
-export default class Signup extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: "",
-      name: "",
-      password: "",
-      message: null
-    }
-    this.handleInputChange = this.handleInputChange.bind(this)
-  }
+import api from "../../api";
 
-  handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
+export default function Signup(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isCook, setIsCook] = useState(false);
+  const [message, setMessage] = useState("");
 
-  handleClick(e) {
-    e.preventDefault()
+  const handleSubmit = e => {
+    e.preventDefault();
     let data = {
-      username: this.state.username,
-      name: this.state.name,
-      password: this.state.password,
-    }
-    api.signup(data)
+      username: username,
+      password: password,
+      isCook: isCook
+    };
+    api
+      .signup(data)
       .then(result => {
-        console.log('SUCCESS!')
-        this.props.history.push("/") // Redirect to the home page
+        console.log("SUCCESS!");
+        props.history.push("/"); // Redirect to the home page
       })
-      .catch(err => this.setState({ message: err.toString() }))
-  }
+      .catch(err => setMessage(err.toString()));
+  };
+  return (
+    <div>
+      <form>
+        <input
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          placeholder="username"
+          type="text"
+          name="username"
+          required
+        />
 
-  render() {
-    return (
-      <div className="Signup">
-        <h2>Signup</h2>
-        <form>
-          Username: <input type="text" value={this.state.username} name="username" onChange={this.handleInputChange} /> <br />
-          Name: <input type="text" value={this.state.name} name="name" onChange={this.handleInputChange} /> <br />
-          Password: <input type="password" value={this.state.password} name="password" onChange={this.handleInputChange} /> <br />
-          <button onClick={(e) => this.handleClick(e)}>Signup</button>
-        </form>
-        {this.state.message && <div className="info info-danger">
-          {this.state.message}
-        </div>}
-      </div>
-    );
-  }
+        <input
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="Password"
+          type="password"
+          name="password"
+          required
+        />
+
+        <input
+          type="checkbox"
+          name="isCook"
+          checked={isCook}
+          onChange={e => setIsCook(!isCook)}
+        />
+
+        <button onClick={e => handleSubmit(e)} type="submit">
+          Submit
+        </button>
+      </form>
+      {message && <div className="info info-danger">{message}</div>}
+    </div>
+  );
 }
