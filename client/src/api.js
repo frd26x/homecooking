@@ -63,6 +63,13 @@ export default {
     return service.get("/logout");
   },
   postOffer(offer) {
-    return service.post("/offers", offer);
+    return service.post("/offers", offer).then(res => {
+      return res.data;
+    });
+  },
+  getOffers() {
+    return service.get("/offers").then(res => {
+      return res.data;
+    });
   }
 };

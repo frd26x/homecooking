@@ -20,9 +20,9 @@ export default function App() {
         {!api.isLoggedIn() && <NavLink to="/signup">Signup</NavLink>}
         {!api.isLoggedIn() && <NavLink to="/login">Login</NavLink>}
         {api.isLoggedIn() && (
-          <NavLink to="/" onClick={e => handleLogoutClick(e)}>
+          <Link to="/" onClick={e => handleLogoutClick(e)}>
             Logout
-          </NavLink>
+          </Link>
         )}
         {api.isLoggedIn() && (
           <NavLink to="/post-offer">
