@@ -71,5 +71,15 @@ export default {
     return service.get("/offers").then(res => {
       return res.data;
     });
+  },
+  getBookings(params) {
+    return service.get("/bookings/" + params).then(res => {
+      return res.data;
+    });
+  },
+  postBooking(booking) {
+    return service.post("/bookings", booking).then(res => {
+      return res.data;
+    });
   }
 };

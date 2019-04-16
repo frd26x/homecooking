@@ -21,7 +21,7 @@ const offerSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  _user: {
+  _seller: {
     type: Schema.Types.ObjectId,
     ref: "User"
   }

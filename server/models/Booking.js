@@ -19,7 +19,7 @@ const bookingSchema = new Schema(
       required: true
     },
     quantity:{
-      type: number,
+      type: Number,
       required: true
     }
   },

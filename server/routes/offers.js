@@ -15,8 +15,9 @@ router.get("/", (req, res, next) => {
 // Route to add a Offer
 router.post("/", (req, res, next) => {
   const { food, location, price, description, quantity } = req.body;
-  const { _user } = req.user._id;
-  Offer.create({ food, location, price, description, quantity, _user })
+  console.log(req.user._id)
+  const _seller = req.user._id;
+  Offer.create({ food, location, price, description, quantity, _seller })
     .then(Offer => {
       res.json({
         success: true,

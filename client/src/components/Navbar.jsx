@@ -17,6 +17,7 @@ export default function Navbar(props){
         )}
         {api.isLoggedIn() && <NavLink to="/post-offer">Post Offer</NavLink>}
         {api.isLoggedIn() && <NavLink to="/all-offers">All Offers</NavLink>}
+        {api.isLoggedIn() && <NavLink to="/all-booking-buyer">All Booking as buyer</NavLink>}
       </header>
   )
 }

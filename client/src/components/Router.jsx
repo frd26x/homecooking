@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PostOffer from "./pages/PostOffer";
 import Offers from "./pages/Offers";
+import Bookings from "./pages/Bookings"
 
 export default function Router() {
   return (
@@ -14,6 +15,8 @@ export default function Router() {
       <Route path="/login" component={Login} />
       <Route path="/post-offer" component={PostOffer} />
       <Route path="/all-offers" component={Offers} />
+      <Route path="/all-booking-buyer" component={Bookings} />
+
       <Route render={() => <h2>404</h2>} />
     </Switch>
   );
