@@ -16,7 +16,7 @@ export default function Bookings() {
   return (
     <div>
       {bookings.map((booking, i) => (
-        <div>
+        <div key={i}>
           <h2>Buyer: {booking._buyer}</h2>
           <h2>Seller: {booking._seller}</h2>
           <h2>Offer:{booking._offer}€</h2>
