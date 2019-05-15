@@ -21,7 +21,7 @@ export default function Bookings() {
           <h2>Seller: {booking._seller}</h2>
           <h2>Offer:{booking._offer}€</h2>
           <h2>Quantity: {booking.quantity}</h2>
-        </div>
+        </div>//test
       ))}
       {message ? <h1>{message}</h1> : null}
     </div>
